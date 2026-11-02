@@ -1,0 +1,8 @@
+{
+  "name": "coffee-run",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A quick multiplayer coffee-stealing game for your local network.",
+  "scripts": {"start": "node server.js", "test": "node --test"},
+  "dependencies": {"ws": "^8.18.0"}
+}
