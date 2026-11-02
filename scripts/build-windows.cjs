@@ -1,0 +1,22 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const { execFileSync } = require('node:child_process');
+const esbuild = require('esbuild');
+
+if (process.platform !== 'win32') throw new Error('Build the Windows executable on Windows.');
+const root = path.resolve(__dirname, '..');
+const out = path.join(root, 'dist');
+const work = path.join(out, 'build');
+fs.mkdirSync(work, { recursive: true });
+esbuild.buildSync({ entryPoints: [path.join(root, 'server.js')], bundle: true, platform: 'node', format: 'cjs', outfile: path.join(work, 'server.cjs') });
+const assets = { 'cloudflared.exe': path.join(root, 'cloudflared-windows-amd64.exe') };
+for (const file of fs.readdirSync(path.join(root, 'public'))) assets[file] = path.join(root, 'public', file);
+const config = path.join(work, 'sea-config.json');
+const blob = path.join(work, 'sea.blob');
+fs.writeFileSync(config, JSON.stringify({ main: path.join(work, 'server.cjs'), output: blob, disableExperimentalSEAWarning: true, assets }, null, 2));
+execFileSync(process.execPath, ['--experimental-sea-config', config], { stdio: 'inherit' });
+const exe = path.join(out, 'CoffeeRun-Server.exe');
+fs.copyFileSync(process.execPath, exe);
+execFileSync(process.execPath, [require.resolve('postject/dist/cli.js'), exe, 'NODE_SEA_BLOB', blob, '--sentinel-fuse', 'NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2'], { stdio: 'inherit' });
+fs.rmSync(work, { recursive: true, force: true });
+console.log(`Built ${exe}`);

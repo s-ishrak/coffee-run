@@ -3,6 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "description": "A quick multiplayer coffee-stealing game for your local network.",
-  "scripts": {"start": "node server.js", "test": "node --test"},
-  "dependencies": {"ws": "^8.18.0"}
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test",
+    "build:windows": "node scripts/build-windows.cjs"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "postject": "^1.0.0-alpha.6"
+  }
 }

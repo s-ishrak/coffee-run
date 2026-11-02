@@ -2,3 +2,4 @@ node_modules/
 asset-source/
 
 *.log
+dist/

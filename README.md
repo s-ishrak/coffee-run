@@ -15,6 +15,17 @@ Coffee Run is a 2–5 player browser game for coffee breaks and friendly rivalri
 
 ## Start a game
 
+### Windows: standalone server
+
+1. [Download CoffeeRun-Server.exe](https://github.com/s-ishrak/coffee-run/releases/latest/download/CoffeeRun-Server.exe) and open it. No Node.js installation is needed.
+2. Keep the server window open, and open [localhost:3000](http://localhost:3000) on the host computer.
+3. Share the Cloudflare invite link printed in the window for internet play, or the local network address for players on the same network. The public link changes each time the server restarts.
+4. Everyone enters a name. The first player to join is the host. At least two connected players must ready up before the host starts the countdown. Close the server window when finished.
+
+The executable is unsigned, so Windows may show a security warning. Download it only from the project's GitHub releases.
+
+### Run from source
+
 The host needs [Node.js 18 or newer](https://nodejs.org/). From the project folder, run:
 
 ```bash
@@ -28,6 +39,8 @@ npm start
 4. Keep the server running while playing; stop it with `Ctrl+C` when finished.
 
 The included quick-tunnel executable is for Windows. On other systems, local-network play is available; set `COFFEE_NO_TUNNEL=1` to skip starting the bundled executable.
+
+To build the standalone executable from source on Windows, use Node.js 24 and run `npm install` followed by `npm run build:windows`. The result is written to `dist/CoffeeRun-Server.exe`.
 
 If local players cannot connect, check that devices are on the same non-guest network and that the host's private-network firewall allows Node.js. Some office networks isolate devices. If port 3000 is in use, set `PORT` before starting (PowerShell: `$env:PORT=3001; npm start`).
 
